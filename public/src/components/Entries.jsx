@@ -30,23 +30,15 @@ export default function Entries() {
   return (
     <Card className={classes.root}>
       <CardContent>
-        <Typography className={classes.title} color="textSecondary" gutterBottom>
-          Entries
-        </Typography>
-        <Typography variant="h5" component="h2">
-          be{bull}nev{bull}o{bull}lent
+      <Typography className="headers" variant="h5" component="h2">
+          Where have you been and how are you?
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          adjective
-        </Typography>
-        <Typography variant="body2" component="p">
-          well meaning and kindly.
-          <br />
-          {'"a benevolent smile"'}
+          Help yourself and your community by helping us track the spread of COVID-19
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small">Submit</Button>
       </CardActions>
     </Card>
   );

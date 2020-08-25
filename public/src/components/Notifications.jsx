@@ -23,18 +23,19 @@ export default function Notifications() {
   const classes = useStyles();
   const bull = <span className={classes.bullet}>•</span>;
 
+
   return (
     <Card className={classes.root} variant="outlined">
       <CardContent>
-        <Typography variant="h5" component="h2" className={classes.pos} color="textSecondary" gutterBottom>
+      <Typography className="headers" variant="h5" component="h2">
           Notifications
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          Signed in ?
+          Please sign in to see personalized notifications
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small">Learn More</Button>
+        <Button size="small">Sign in</Button>
       </CardActions>
     </Card>
   );
