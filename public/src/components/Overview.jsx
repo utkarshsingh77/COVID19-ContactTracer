@@ -7,6 +7,13 @@ import {
   CardContent,
   Button,
   Typography,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
 } from "@material-ui/core";
 import axios from "axios";
 
@@ -25,6 +32,9 @@ const useStyles = makeStyles({
   pos: {
     marginBottom: 12,
   },
+  table: {
+    maxWidth: 350,
+  },
 });
 
 export default function Overview() {
@@ -40,7 +50,25 @@ export default function Overview() {
   const submitZip = () => {
     axios
       .get(`/${zip}`)
-      .then((res) => console.log(res.data))
+      .then((res) => {
+        let recentDeathCount = 0;
+        let recentPosCount = 0;
+        let oldestDeathCount = 0;
+        let oldestPosCount = 0;
+        res.data.counties.forEach((county) => {
+          let oldestIndex = county.historicData.length - 1;
+          recentDeathCount += county.historicData[0].deathCt;
+          oldestDeathCount += county.historicData[oldestIndex].deathCt;
+          recentPosCount += county.historicData[0].positiveCt;
+          oldestPosCount += county.historicData[oldestIndex].positiveCt;
+        });
+        let newDeaths = recentDeathCount - oldestDeathCount;
+        let newPositives = recentPosCount - oldestPosCount;
+        setData({ newDeaths: newDeaths, newPositives: newPositives });
+        console.log(newDeaths);
+        console.log(newPositives);
+        console.log(res.data);
+      })
       .catch(() => console.log("error"));
   };
 
@@ -66,9 +94,27 @@ export default function Overview() {
             Submit
           </Button>
         </form>
-        <Typography className={classes.pos} color="textSecondary">
-          Here is some information for you
-        </Typography>
+        {data && (
+          <div>
+            <Typography className={classes.pos} color="textSecondary">
+              Here is some information for you:
+            </Typography>
+            <TableContainer component={Paper}>
+              <Table className={classes.table} aria-label="simple table">
+                <TableHead>
+                  <TableCell>New COVID-19 Cases in the last 7 days</TableCell>
+                  <TableCell align="right">
+                    New COVID-19 Deaths in the last 7 days
+                  </TableCell>
+                </TableHead>
+                <TableBody>
+                  <TableCell>{data.newPositives}</TableCell>
+                  <TableCell>{data.newDeaths}</TableCell>
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </div>
+        )}
       </CardContent>
     </Card>
   );

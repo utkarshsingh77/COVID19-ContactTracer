@@ -13,7 +13,7 @@ app.get("/:zip", (req, res) => {
   let zip = req.params.zip;
   axios
     .get(
-      `https://localcoviddata.com/covid19/v1/cases/newYorkTimes?zipCode=${zip}&daysInPast=1`
+      `https://localcoviddata.com/covid19/v1/cases/newYorkTimes?zipCode=${zip}&daysInPast=7`
     )
     .then((data) => res.send(data.data))
     .catch(() => console.log("error"));
